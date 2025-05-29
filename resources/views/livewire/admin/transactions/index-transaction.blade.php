@@ -12,18 +12,64 @@
         </flux:dropdown>
     </div>
     <div class="flex flex-1 flex-col gap-4">
-        <div class="flex justify-between items-center">
+        <div class="flex gap-2 items-center">
             <div class="lg:w-1/3">
                 <flux:input wire:model.live="search" type="text" placeholder="Search Transaction" />
             </div>
-            <div class="flex gap-2">
+            <flux:dropdown align="start" position="bottom">
                 <flux:button icon="funnel" variant="ghost">
                     Filter
                 </flux:button>
-                <flux:button icon="bars-arrow-down" variant="ghost">
-                    Sort
-                </flux:button>
-            </div>
+
+                <flux:menu>
+                    <flux:menu.item wire:click="$set('transactionableType', 'program')">
+                        <div class="flex items-center">
+                            <span>Program</span>
+                            @if ($transactionableType === 'program')
+                                <flux:icon.check class="ml-2 h-4 w-4" />
+                            @endif
+                        </div>
+                    </flux:menu.item>
+                    <flux:menu.item wire:click="$set('transactionableType', 'investment')">
+                        <div class="flex items-center">
+                            <span>Investment</span>
+                            @if ($transactionableType === 'investment')
+                                <flux:icon.check class="ml-2 h-4 w-4" />
+                            @endif
+                        </div>
+                    </flux:menu.item>
+                    <flux:menu.separator />
+                    @if ($transactionableType === 'program')
+                        <flux:menu.item wire:click="$set('programType', 'loyalty')">
+                            <div class="flex items-center">
+                                <span>Loyalty</span>
+                                @if ($programType === 'loyalty')
+                                    <flux:icon.check class="ml-2 h-4 w-4" />
+                                @endif
+                            </div>
+                        </flux:menu.item>
+                        <flux:menu.item wire:click="$set('programType', 'personal')">
+                            <div class="flex items-center">
+                                <span>Personal</span>
+                                @if ($programType === 'personal')
+                                    <flux:icon.check class="ml-2 h-4 w-4" />
+                                @endif
+                            </div>
+                        </flux:menu.item>
+                        <flux:menu.separator />
+                    @endif
+                    <div class="px-2 py-1">
+                        <div class="space-y-2">
+                            <flux:input type="date" wire:model.live="startDate" placeholder="Start Date" />
+                            <flux:input type="date" wire:model.live="endDate" placeholder="End Date" />
+                        </div>
+                    </div>
+                    <flux:menu.separator />
+                    <flux:menu.item wire:click="resetFilters">
+                        Reset Filters
+                    </flux:menu.item>
+                </flux:menu>
+            </flux:dropdown>
         </div>
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
@@ -53,27 +99,46 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
-                                <tr>
-                                    <td
-                                        class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
-                                        29 May 2025</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                        Thoriq Al Hakim</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                        Program</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                        Investment</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
-                                        100.000</td>
-                                    <td class="px-6 py-4 whitespace-nowrap flex justify-end">
-                                        <flux:button variant="ghost" size="sm">
-                                            <flux:icon.pencil-square class="text-green-500 size-5" />
-                                        </flux:button>
-                                        <flux:button variant="ghost" size="sm" >
-                                            <flux:icon.trash class="text-red-500 size-5" />
-                                        </flux:button>
-                                    </td>
-                                </tr>
+                                @forelse ($transactions as $item)
+                                    <tr>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">
+                                            {{ Carbon\Carbon::parse($item->transaction_date)->translatedFormat('d F Y') }}
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ $item->user->name }}</td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ class_basename($item->transactionable_type) }}</td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            <span>{{ $item->transactionable->name }}</span>
+                                            @if ($item->transactionable_type == 'App\Models\Program')
+                                                - <span class="capitalize">{{ $item->transaction_type }}</span>
+                                            @endif
+                                        </td>
+                                        <td
+                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            {{ number_format($item->amount, 0, ',', '.') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap flex justify-end">
+                                            <flux:button variant="ghost" size="sm">
+                                                <flux:icon.pencil-square class="text-green-500 size-5" />
+                                            </flux:button>
+                                            <flux:button variant="ghost" size="sm">
+                                                <flux:icon.trash class="text-red-500 size-5" />
+                                            </flux:button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6"
+                                            class="px-6 py-4 text-center text-sm text-gray-500 dark:text-neutral-400">
+                                            No transactions found
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
