@@ -14,7 +14,7 @@
                 <div class="p-1.5 min-w-full inline-block align-middle">
                     <div class="border border-gray-200 shadow rounded-lg overflow-hidden">
                         <table class="min-w-full divide-y divide-gray-200">
-                            <thead>
+                            <thead class="bg-gray-50 dark:bg-neutral-700">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium uppercase">
                                         Name</th>
