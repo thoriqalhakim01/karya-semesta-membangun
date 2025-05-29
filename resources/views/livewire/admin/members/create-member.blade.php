@@ -8,7 +8,7 @@
     <flux:separator class="my-4" />
 
     @include('livewire.admin.members.stepper', ['currentStep' => $currentStep])
-    
+
     <div class="flex-1">
         @include('livewire.admin.members.multi-step-form')
     </div>
