@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->date('join_date')->default(now());
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

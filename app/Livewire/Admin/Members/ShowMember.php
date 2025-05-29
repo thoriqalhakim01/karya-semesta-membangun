@@ -13,6 +13,13 @@ class ShowMember extends Component
         $this->member = User::with(['detail', 'investments', 'programs'])->findOrFail($member);
     }
 
+    public function delete(User $member)
+    {
+        $member->delete();
+
+        $this->redirect(route('admin.members.index'), navigate: true);
+    }
+
     public function render()
     {
         return view('livewire.admin.members.show-member');

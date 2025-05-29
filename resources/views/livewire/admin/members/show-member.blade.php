@@ -16,9 +16,7 @@
                 wire:navigate>
                 Edit
             </flux:button>
-            <flux:button icon="trash" variant="danger">
-                Delete
-            </flux:button>
+            <livewire:admin.members.delete-member :member="$member" />
         </div>
     </div>
     <div class="grid lg:grid-cols-2 gap-6">

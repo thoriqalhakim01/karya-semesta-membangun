@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('investment_id')->references('id')->on('investments')->onDelete('cascade');
             $table->date('join_date')->default(now());
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
