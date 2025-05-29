@@ -1,9 +1,8 @@
 <?php
-
 namespace App\Livewire\Forms\Admin\Members;
 
 use App\Models\User;
-use Livewire\Attributes\Validate;
+use App\Models\UserInvestment;
 use Livewire\Form;
 
 class EditMemberInvestmentForm extends Form
@@ -20,6 +19,13 @@ class EditMemberInvestmentForm extends Form
     public function update($id)
     {
         $member = User::findOrFail($id);
+
+        foreach ($this->investments as $investment) {
+            UserInvestment::updateOrCreate([
+                'user_id'       => $id,
+                'investment_id' => $investment,
+            ]);
+        }
 
         $member->investments()->sync($this->investments);
     }

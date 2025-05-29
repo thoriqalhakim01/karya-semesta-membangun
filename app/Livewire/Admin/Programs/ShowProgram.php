@@ -9,9 +9,13 @@ class ShowProgram extends Component
 {
     public $program;
 
+    public $numberOfParticipants = 0;
+
     public function mount(Program $program)
     {
         $this->program = $program;
+
+        $this->numberOfParticipants = $program->users->count();
     }
 
     #[On('program-updated')]

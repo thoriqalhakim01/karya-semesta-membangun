@@ -26,7 +26,7 @@
             <div class="rounded-md border shadow">
                 <div class="flex flex-col space-y-2 p-4">
                     <flux:heading size="lg" class="text-center">Number of Participants</flux:heading>
-                    <p class="text-center text-2xl font-bold"></p>
+                    <p class="text-center text-2xl font-bold">{{ $numberOfParticipants }}</p>
                 </div>
             </div>
         </div>

@@ -9,9 +9,13 @@ class ShowInvestment extends Component
 {
     public $investment;
 
+    public $numberOfParticipants = 0;
+
     public function mount(Investment $investment)
     {
         $this->investment = $investment;
+
+        $this->numberOfParticipants = $investment->users->count();
     }
 
     #[On('investment-updated')]

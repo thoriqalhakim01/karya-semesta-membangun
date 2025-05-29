@@ -14,4 +14,10 @@ class Program extends Model
         'description',
         'target',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_programs');
+    }
+
 }
