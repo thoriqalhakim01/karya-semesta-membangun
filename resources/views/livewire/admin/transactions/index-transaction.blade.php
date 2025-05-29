@@ -91,7 +91,7 @@
                                         class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-neutral-400">
                                         Transaction Type</th>
                                     <th scope="col"
-                                        class="px-6 py-3 text-start text-xs font-medium text-gray-500 dark:text-neutral-400">
+                                        class="px-6 py-3 text-end text-xs font-medium text-gray-500 dark:text-neutral-400">
                                         Amount</th>
                                     <th scope="col"
                                         class="px-6 py-3 text-end text-xs font-medium text-gray-500 dark:text-neutral-400">
@@ -119,10 +119,12 @@
                                             @endif
                                         </td>
                                         <td
-                                            class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
+                                            class="px-6 py-4  text-end whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                             {{ number_format($item->amount, 0, ',', '.') }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap flex justify-end">
+                                            <livewire:admin.transactions.show-transaction :transaction="$item"
+                                                :key="$item->id" />
                                             <flux:button variant="ghost" size="sm">
                                                 <flux:icon.pencil-square class="text-green-500 size-5" />
                                             </flux:button>

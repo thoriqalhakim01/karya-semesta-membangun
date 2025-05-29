@@ -12,8 +12,8 @@
         <div class="flex flex-col">
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
-                    <div class="border border-gray-200 shadow rounded-lg overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
+                    <div class="border border-gray-200 rounded-lg overflow-hidden dark:border-neutral-700">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
                             <thead class="bg-gray-50 dark:bg-neutral-700">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-start text-xs font-medium uppercase">
@@ -40,7 +40,8 @@
                                                     <p class="font-medium">{{ $member->name }}</p>
                                                     <div class="flex items-center gap-x-2">
                                                         <flux:text class="text-xs">
-                                                            {{ $member->gender == 'male' ? 'Male' : 'Female' }}</flux:text>
+                                                            {{ $member->gender == 'male' ? 'Male' : 'Female' }}
+                                                        </flux:text>
                                                         <flux:icon name="minus" class="w-2 h-2" />
                                                         <flux:text class="text-xs">
                                                             {{ (int) Carbon\Carbon::parse($member->detail->birth_date)->diffInYears(now()) }}
