@@ -1,16 +1,28 @@
 <?php
 namespace App\Livewire\Admin\Members;
 
+use App\Livewire\Forms\Admin\Members\EditMemberForm;
 use App\Models\User;
 use Livewire\Component;
 
 class EditMember extends Component
 {
-    public User $member;
+    public EditMemberForm $form;
+
+    public $member;
 
     public function mount(User $member)
     {
         $this->member = $member;
+
+        $this->form->setMember($this->member);
+    }
+
+    public function save()
+    {
+        $this->form->update($this->member->id);
+
+        $this->redirect(route('admin.members.show', $this->member));
     }
 
     public function render()
