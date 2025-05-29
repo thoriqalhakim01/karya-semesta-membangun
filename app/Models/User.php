@@ -2,6 +2,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\HasTransactions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes, HasTransactions;
 
     protected $fillable = [
         'name',
@@ -48,7 +50,7 @@ class User extends Authenticatable
 
     public function programs()
     {
-        return $this->belongsToMany(Program::class, 'user_programs');
+        return $this->belongsToMany(Program::class, 'user_programs', 'user_id', 'program_id');
     }
 
     public function investments()

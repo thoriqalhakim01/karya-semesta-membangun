@@ -11,6 +11,8 @@ use App\Livewire\Admin\Members\IndexMember;
 use App\Livewire\Admin\Members\ShowMember;
 use App\Livewire\Admin\Programs\IndexProgram;
 use App\Livewire\Admin\Programs\ShowProgram;
+use App\Livewire\Admin\Transactions\CreateInvestmentTransaction;
+use App\Livewire\Admin\Transactions\CreateProgramTransaction;
 use App\Livewire\Admin\Transactions\IndexTransaction;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +42,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::prefix('transactions')->group(function () {
         Route::get('/', IndexTransaction::class)->name('admin.transactions.index');
+        Route::get('/create-program-transaction', CreateProgramTransaction::class)->name('admin.transaction.create-program');
+        Route::get('/create-investment-transaction', CreateInvestmentTransaction::class)->name('admin.transaction.create-investment');
     });
 });

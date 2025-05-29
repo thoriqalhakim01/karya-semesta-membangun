@@ -1,9 +1,15 @@
 <div class="flex w-full flex-1 flex-col gap-4 rounded-xl">
     <div class="flex flex-1 justify-between items-center">
         <flux:heading size="xl">Transaction Listing</flux:heading>
-        <flux:button icon="plus" variant="primary">
-            Create New
-        </flux:button>
+        <flux:dropdown>
+            <flux:button variant="primary" icon:trailing="chevron-down">Create New</flux:button>
+            <flux:menu>
+                <flux:menu.item :href="route('admin.transaction.create-program')">Add Program Transaction
+                </flux:menu.item>
+                <flux:menu.item :href="route('admin.transaction.create-investment')">Add Investment
+                    Transaction</flux:menu.item>
+            </flux:menu>
+        </flux:dropdown>
     </div>
     <div class="flex flex-1 flex-col gap-4">
         <div class="flex justify-between items-center">
@@ -59,10 +65,13 @@
                                         Investment</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">
                                         100.000</td>
-                                    <td class="px-6 py-4 whitespace-nowrap flex justify-end gap-2">
-                                        <flux:button icon="pencil-square" variant="primary"
-                                            class="bg-green-500 hover:bg-green-600" />
-                                        <flux:button icon="trash" variant="danger" />
+                                    <td class="px-6 py-4 whitespace-nowrap flex justify-end">
+                                        <flux:button variant="ghost" size="sm">
+                                            <flux:icon.pencil-square class="text-green-500 size-5" />
+                                        </flux:button>
+                                        <flux:button variant="ghost" size="sm" >
+                                            <flux:icon.trash class="text-red-500 size-5" />
+                                        </flux:button>
                                     </td>
                                 </tr>
                             </tbody>
