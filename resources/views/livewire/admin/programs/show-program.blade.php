@@ -191,7 +191,6 @@
         </div>
     </div>
 
-    {{-- Pagination --}}
     @if ($transactions->hasPages())
         <div class="mt-4">
             {{ $transactions->links() }}
