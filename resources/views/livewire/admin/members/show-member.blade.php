@@ -9,10 +9,7 @@
             </flux:breadcrumbs.item>
         </flux:breadcrumbs>
         <div class="flex items-center gap-x-4">
-            <flux:text class="text-xs">
-                Last update at {{ $member->updated_at->format('d M Y H:i') }}
-            </flux:text>
-            <flux:button icon="pencil-square" variant="outline" href="{{ route('admin.members.edit', $member->id) }}"
+                <flux:button icon="pencil-square" variant="outline" href="{{ route('admin.members.edit', $member->id) }}"
                 wire:navigate>
                 Edit
             </flux:button>
@@ -22,5 +19,8 @@
     <div class="grid lg:grid-cols-2 gap-6">
         @include('livewire.admin.members.member-details')
         @include('livewire.admin.members.program-investment')
+    </div>
+    <div class="col-span-full">
+        @include('livewire.admin.members.transactions')
     </div>
 </div>

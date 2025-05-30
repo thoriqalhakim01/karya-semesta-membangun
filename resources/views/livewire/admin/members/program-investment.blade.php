@@ -30,7 +30,8 @@
                                                 {{ number_format($program->target, 0, ',', '.') }}</flux:text>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                            <flux:text variant="strong">{{ number_format(100000000, 0, ',', '.') }}
+                                            <flux:text variant="strong">
+                                                {{ number_format($this->getCollectedAmountProgram($program), 0, ',', '.') }}
                                             </flux:text>
                                         </td>
                                     </tr>
@@ -50,11 +51,19 @@
     </div>
     <div class="space-y-2">
         <flux:heading size="lg">Investment</flux:heading>
-        <div class="grid grid-cols-3 gap-4">
+        <div class="grid grid-cols-2 gap-4">
             @forelse ($member->investments as $investment)
                 <div class="rounded-md border shadow">
-                    <div class="flex flex-col p-2">
-                        <flux:heading size="md">{{ $investment->name }}</flux:heading>
+                    <div class="flex flex-col p-2 space-y-2">
+                        <flux:heading size="lg">{{ $investment->name }}</flux:heading>
+                        <div class="flex justify-between items-center">
+                            <flux:text>
+                                Collected:
+                            </flux:text>
+                            <flux:text variant="strong">
+                                {{ number_format($this->getCollectedAmountInvestment($investment), 0, ',', '.') }}
+                            </flux:text>
+                        </div>
                     </div>
                 </div>
             @empty

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('job')->nullable();
             $table->json('bank_accounts')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

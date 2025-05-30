@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->timestamps();
             $table->index(['transactionable_id', 'transactionable_type']);
+            $table->softDeletes();
         });
     }
 

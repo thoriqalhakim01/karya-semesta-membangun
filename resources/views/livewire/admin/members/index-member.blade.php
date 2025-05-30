@@ -83,5 +83,8 @@
                 </div>
             </div>
         </div>
+        @if ($members->hasPages())
+            {{ $members->links() }}
+        @endif
     </div>
 </div>

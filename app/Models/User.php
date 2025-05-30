@@ -35,6 +35,27 @@ class User extends Authenticatable
         ];
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($user) {
+            $user->detail()->delete();
+
+            $user->programs()->detach();
+
+            $user->investments()->detach();
+
+            $user->memberTransactions()->delete();
+        });
+
+        static::forceDeleting(function ($user) {
+            $user->detail()->forceDelete();
+
+            $user->memberTransactions()->forceDelete();
+        });
+    }
+
     public function initials(): string
     {
         return Str::of($this->name)
@@ -56,5 +77,10 @@ class User extends Authenticatable
     public function investments()
     {
         return $this->belongsToMany(Investment::class, 'user_investments');
+    }
+
+    public function memberTransactions()
+    {
+        return $this->hasMany(Transaction::class, 'user_id');
     }
 }

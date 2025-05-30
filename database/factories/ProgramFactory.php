@@ -18,7 +18,7 @@ class ProgramFactory extends Factory
         return [
             'name'        => fake()->name(),
             'description' => fake()->sentence(2),
-            'target'      => fake()->numberBetween(1000000, 100000000),
+            'target'      => fake()->numberBetween(100000, 999999),
             'created_at'  => fake()->dateTime(),
             'updated_at'  => fake()->dateTime(),
         ];

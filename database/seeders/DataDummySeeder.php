@@ -21,10 +21,10 @@ class DataDummySeeder extends Seeder
         try {
             DB::beginTransaction();
 
-            $users = User::factory(50)->create();
+            $users = User::factory(10)->create();
 
-            Program::factory(20)->create();
-            Investment::factory(20)->create();
+            Program::factory(5)->create();
+            Investment::factory(5)->create();
 
             foreach ($users as $user) {
                 UserDetail::factory()->create([
@@ -33,7 +33,7 @@ class DataDummySeeder extends Seeder
 
                 $user->assignRole('user');
 
-                $randomPrograms = Program::inRandomOrder()->take(fake()->numberBetween(1, 5))->get();
+                $randomPrograms = Program::inRandomOrder()->take(fake()->numberBetween(1, 3))->get();
 
                 foreach ($randomPrograms as $program) {
                     UserProgram::create([
@@ -49,7 +49,7 @@ class DataDummySeeder extends Seeder
                         'transactionable_type' => Program::class,
                         'transaction_date'     => fake()->dateTimeBetween('2024-01-01', '2025-12-31'),
                         'transaction_type'     => fake()->randomElement(['loyalty', 'personal']),
-                        'amount'               => fake()->numberBetween(1000000, 10000000),
+                        'amount'               => fake()->numberBetween(10000, 99999),
                         'payment_method'       => fake()->randomElement(['bank_transfer', 'credit_card', 'e-wallet']),
                     ]);
                 }
@@ -71,7 +71,7 @@ class DataDummySeeder extends Seeder
                         'transactionable_id'   => $investment->id,
                         'transactionable_type' => Investment::class,
                         'transaction_date'     => fake()->dateTimeBetween('2024-01-01', '2025-12-31'),
-                        'amount'               => fake()->numberBetween(1000000, 10000000),
+                        'amount'               => fake()->numberBetween(10000, 99999),
                         'payment_method'       => fake()->randomElement(['bank_transfer', 'credit_card', 'e-wallet']),
                     ]);
                 }
