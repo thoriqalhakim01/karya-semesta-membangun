@@ -10,28 +10,22 @@ class IndexTransaction extends Component
 {
     use WithPagination;
 
-    #[Url( as :'q')]
+    #[Url( as :'q', keep: true)]
     public $search = '';
 
-    #[Url( as :'type')]
+    #[Url( as :'type', keep: true)]
     public $transactionableType = '';
 
-    #[Url( as :'start')]
+    #[Url( as :'start', keep: true)]
     public $startDate = '';
 
-    #[Url( as :'end')]
+    #[Url( as :'end', keep: true)]
     public $endDate = '';
 
-    #[Url( as :'program_type')]
+    #[Url( as :'program_type', keep: true)]
     public $programType = '';
 
-    protected $queryString = [
-        'search'              => ['except' => ''],
-        'transactionableType' => ['except' => ''],
-        'startDate'           => ['except' => ''],
-        'endDate'             => ['except' => ''],
-        'programType'         => ['except' => ''],
-    ];
+    // Remove queryString property since we're using Url attributes
 
     public function updatedSearch()
     {
@@ -66,28 +60,46 @@ class IndexTransaction extends Component
 
     private function fetchTransactions()
     {
-        $query = Transaction::query()
-            ->with(['user', 'transactionable'])
-            ->when($this->search, function ($query) {
-                $query->whereHas('user', function ($query) {
-                    $query->where('name', 'like', '%' . $this->search . '%');
-                });
-            })
-            ->when($this->transactionableType !== '', function ($query) {
-                if ($this->transactionableType === 'program') {
-                    $query->where('transactionable_type', 'App\Models\Program');
-                } elseif ($this->transactionableType === 'investment') {
-                    $query->where('transactionable_type', 'App\Models\Investment');
-                }
-            })
-            ->when($this->startDate && $this->endDate, function ($query) {
-                $query->whereBetween('transaction_date', [$this->startDate, $this->endDate]);
-            })
-            ->when($this->programType, function ($query) {
-                $query->where('transaction_type', $this->programType);
-            });
+        $query = Transaction::query()->with(['user', 'transactionable']);
 
-        return $query->orderBy('transaction_date', 'desc')->paginate(12);
+        // Apply transactionable type filter first (most restrictive)
+        if (! empty($this->transactionableType)) {
+            if ($this->transactionableType === 'program') {
+                $query->where('transactionable_type', 'App\Models\Program');
+            } elseif ($this->transactionableType === 'investment') {
+                $query->where('transactionable_type', 'App\Models\Investment');
+            }
+        }
+
+        // Apply search filter with proper grouping
+        if (! empty($this->search)) {
+            $searchTerm = trim($this->search);
+            $query->where(function ($subQuery) use ($searchTerm) {
+                $subQuery->whereHas('user', function ($userQuery) use ($searchTerm) {
+                    $userQuery->where('name', 'like', '%' . $searchTerm . '%')
+                        ->orWhere('email', 'like', '%' . $searchTerm . '%');
+                })
+                    ->orWhereHas('transactionable', function ($transactionableQuery) use ($searchTerm) {
+                        $transactionableQuery->where('name', 'like', '%' . $searchTerm . '%');
+                    })
+                    ->orWhere('transaction_type', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        // Apply date range filter
+        if (! empty($this->startDate) && ! empty($this->endDate)) {
+            $query->whereBetween('transaction_date', [$this->startDate, $this->endDate]);
+        }
+
+        // Apply program type filter (only for programs)
+        if (! empty($this->programType)) {
+            $query->where('transaction_type', $this->programType)
+                ->where('transactionable_type', 'App\Models\Program'); // Ensure it's only for programs
+        }
+
+        return $query->orderBy('transaction_date', 'desc')
+            ->orderBy('id', 'desc')
+            ->paginate(12);
     }
 
     public function resetFilters()
@@ -98,9 +110,19 @@ class IndexTransaction extends Component
 
     public function delete($id)
     {
-        $transaction = Transaction::findOrFail($id);
-        $transaction->delete();
-        $this->redirect(route('admin.transactions.index'), navigate: true);
+        try {
+            $transaction = Transaction::findOrFail($id);
+            $transaction->delete();
+
+            // Use session flash message instead of redirect
+            session()->flash('success', 'Transaction deleted successfully');
+
+            // Refresh the component data
+            $this->dispatch('$refresh');
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Failed to delete transaction');
+        }
     }
 
     public function render()
