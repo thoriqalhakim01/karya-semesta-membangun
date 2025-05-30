@@ -132,9 +132,7 @@
                                                 wire:navigate>
                                                 <flux:icon.pencil-square class="text-green-500 size-5" />
                                             </flux:button>
-                                            <flux:button variant="ghost" size="sm">
-                                                <flux:icon.trash class="text-red-500 size-5" />
-                                            </flux:button>
+                                            <livewire:admin.transactions.delete-transaction :transaction="$item" />
                                         </td>
                                     </tr>
                                 @empty

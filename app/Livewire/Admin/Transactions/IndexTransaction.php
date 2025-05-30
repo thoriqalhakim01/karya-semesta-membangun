@@ -86,6 +86,15 @@ class IndexTransaction extends Component
         $this->resetPage();
     }
 
+    public function delete($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+
+        $transaction->delete();
+
+        $this->redirect(route('admin.transactions.index'), navigate: true);
+    }
+
     public function render()
     {
         return view('livewire.admin.transactions.index-transaction', [
