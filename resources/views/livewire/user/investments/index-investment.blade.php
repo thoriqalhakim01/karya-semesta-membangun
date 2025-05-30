@@ -10,7 +10,7 @@
         <div class="border rounded-md shadow">
             <div class="w-full overflow-auto p-4 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @forelse ($investments as $investment)
-                    <a href="{{ route('admin.investments.show', $investment) }}" class="group">
+                    <a href="{{ route('user.investments.show', $investment) }}" class="group">
                         <div class="rounded-md border shadow hover:bg-accent/10 hover:shadow-accent/20">
                             <div class="flex flex-col p-4">
                                 <flux:heading size="lg">{{ $investment->name }}</flux:heading>

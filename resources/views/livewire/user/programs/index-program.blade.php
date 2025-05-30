@@ -10,7 +10,7 @@
         <div class="border rounded-md shadow">
             <div class="w-full overflow-auto p-4 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @forelse ($programs as $program)
-                    <a href="{{ route('admin.programs.show', $program) }}" class="group">
+                    <a href="{{ route('user.programs.show', $program) }}" class="group">
                         <div class="rounded-md border shadow hover:bg-accent/10 hover:shadow-accent/20">
                             <div class="flex flex-col p-4">
                                 <flux:heading size="lg">{{ $program->name }}</flux:heading>

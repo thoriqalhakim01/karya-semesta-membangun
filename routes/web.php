@@ -2,7 +2,9 @@
 
 use App\Livewire\User\Dashboard;
 use App\Livewire\User\Investments\IndexInvestment;
+use App\Livewire\User\Investments\ShowInvestment;
 use App\Livewire\User\Programs\IndexProgram;
+use App\Livewire\User\Programs\ShowProgram;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -25,11 +27,13 @@ Route::middleware(['auth'])->group(function () {
             // Program routes
             Route::prefix('programs')->group(function () {
                 Route::get('/', IndexProgram::class)->name('user.programs.index');
+                Route::get('/{program}', ShowProgram::class)->name('user.programs.show');
             });
 
             // Investment routes
             Route::prefix('investments')->group(function () {
                 Route::get('/', IndexInvestment::class)->name('user.investments.index');
+                Route::get('/{investment}', ShowInvestment::class)->name('user.investments.show');
             });
         });
 
