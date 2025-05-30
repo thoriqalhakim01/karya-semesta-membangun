@@ -1,4 +1,4 @@
-<div class="flex w-full flex-1 flex-col gap-4 rounded-xl">
+<div class="flex w-full flex-1 flex-col gap-4 rounded-xl" wire:poll.5s>
     <div class="flex flex-1 justify-between items-center">
         <flux:heading size="xl">Transaction Listing</flux:heading>
         <flux:dropdown>
@@ -22,6 +22,15 @@
                 </flux:button>
 
                 <flux:menu>
+                    <flux:menu.item wire:click="$set('transactionableType', '')">
+                        <div class="flex items-center">
+                            <span>All Types</span>
+                            @if ($transactionableType === '')
+                                <flux:icon.check class="ml-2 h-4 w-4" />
+                            @endif
+                        </div>
+                    </flux:menu.item>
+                    <flux:menu.separator />
                     <flux:menu.item wire:click="$set('transactionableType', 'program')">
                         <div class="flex items-center">
                             <span>Program</span>
@@ -72,6 +81,8 @@
             </flux:dropdown>
         </div>
         <div class="flex flex-col">
+            <div wire:loading.delay wire:target="search, transactionableType, startDate, endDate, programType">
+            </div>
             <div class="-m-1.5 overflow-x-auto">
                 <div class="p-1.5 min-w-full inline-block align-middle">
                     <div class="border border-gray-200 rounded-lg overflow-hidden dark:border-neutral-700">

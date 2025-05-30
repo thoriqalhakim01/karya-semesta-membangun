@@ -25,6 +25,14 @@ class IndexTransaction extends Component
     #[Url( as :'program_type')]
     public $programType = '';
 
+    protected $queryString = [
+        'search'              => ['except' => ''],
+        'transactionableType' => ['except' => ''],
+        'startDate'           => ['except' => ''],
+        'endDate'             => ['except' => ''],
+        'programType'         => ['except' => ''],
+    ];
+
     public function updatedSearch()
     {
         $this->resetPage();
@@ -32,6 +40,7 @@ class IndexTransaction extends Component
 
     public function updatedTransactionableType()
     {
+        $this->programType = '';
         $this->resetPage();
     }
 
@@ -52,6 +61,11 @@ class IndexTransaction extends Component
 
     public function getTransactionsProperty()
     {
+        return $this->fetchTransactions();
+    }
+
+    private function fetchTransactions()
+    {
         $query = Transaction::query()
             ->with(['user', 'transactionable'])
             ->when($this->search, function ($query) {
@@ -59,7 +73,7 @@ class IndexTransaction extends Component
                     $query->where('name', 'like', '%' . $this->search . '%');
                 });
             })
-            ->when($this->transactionableType, function ($query) {
+            ->when($this->transactionableType !== '', function ($query) {
                 if ($this->transactionableType === 'program') {
                     $query->where('transactionable_type', 'App\Models\Program');
                 } elseif ($this->transactionableType === 'investment') {
@@ -69,7 +83,7 @@ class IndexTransaction extends Component
             ->when($this->startDate && $this->endDate, function ($query) {
                 $query->whereBetween('transaction_date', [$this->startDate, $this->endDate]);
             })
-            ->when($this->programType && $this->transactionableType === 'program', function ($query) {
+            ->when($this->programType, function ($query) {
                 $query->where('transaction_type', $this->programType);
             });
 
@@ -78,20 +92,14 @@ class IndexTransaction extends Component
 
     public function resetFilters()
     {
-        $this->search              = '';
-        $this->transactionableType = '';
-        $this->startDate           = '';
-        $this->endDate             = '';
-        $this->programType         = '';
+        $this->reset(['search', 'transactionableType', 'startDate', 'endDate', 'programType']);
         $this->resetPage();
     }
 
     public function delete($id)
     {
         $transaction = Transaction::findOrFail($id);
-
         $transaction->delete();
-
         $this->redirect(route('admin.transactions.index'), navigate: true);
     }
 
