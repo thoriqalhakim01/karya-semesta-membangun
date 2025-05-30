@@ -25,8 +25,6 @@ class IndexTransaction extends Component
     #[Url( as :'program_type', keep: true)]
     public $programType = '';
 
-    // Remove queryString property since we're using Url attributes
-
     public function updatedSearch()
     {
         $this->resetPage();
@@ -62,7 +60,6 @@ class IndexTransaction extends Component
     {
         $query = Transaction::query()->with(['user', 'transactionable']);
 
-        // Apply transactionable type filter first (most restrictive)
         if (! empty($this->transactionableType)) {
             if ($this->transactionableType === 'program') {
                 $query->where('transactionable_type', 'App\Models\Program');
@@ -71,7 +68,6 @@ class IndexTransaction extends Component
             }
         }
 
-        // Apply search filter with proper grouping
         if (! empty($this->search)) {
             $searchTerm = trim($this->search);
             $query->where(function ($subQuery) use ($searchTerm) {
@@ -86,15 +82,13 @@ class IndexTransaction extends Component
             });
         }
 
-        // Apply date range filter
         if (! empty($this->startDate) && ! empty($this->endDate)) {
             $query->whereBetween('transaction_date', [$this->startDate, $this->endDate]);
         }
 
-        // Apply program type filter (only for programs)
         if (! empty($this->programType)) {
             $query->where('transaction_type', $this->programType)
-                ->where('transactionable_type', 'App\Models\Program'); // Ensure it's only for programs
+                ->where('transactionable_type', 'App\Models\Program');
         }
 
         return $query->orderBy('transaction_date', 'desc')
@@ -110,19 +104,10 @@ class IndexTransaction extends Component
 
     public function delete($id)
     {
-        try {
-            $transaction = Transaction::findOrFail($id);
-            $transaction->delete();
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
 
-            // Use session flash message instead of redirect
-            session()->flash('success', 'Transaction deleted successfully');
-
-            // Refresh the component data
-            $this->dispatch('$refresh');
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Failed to delete transaction');
-        }
+        $this->dispatch('$refresh');
     }
 
     public function render()

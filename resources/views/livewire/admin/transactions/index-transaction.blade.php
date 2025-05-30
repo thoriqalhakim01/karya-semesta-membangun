@@ -1,19 +1,4 @@
 <div class="flex w-full flex-1 flex-col gap-4 rounded-xl">
-    {{-- Remove wire:poll.5s to prevent unnecessary updates --}}
-
-    {{-- Flash Messages --}}
-    @if (session()->has('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if (session()->has('error'))
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {{ session('error') }}
-        </div>
-    @endif
-
     <div class="flex flex-1 justify-between items-center">
         <flux:heading size="xl">Transaction Listing</flux:heading>
         <flux:dropdown>
@@ -30,13 +15,11 @@
     <div class="flex flex-1 flex-col gap-4">
         <div class="flex gap-2 items-center">
             <div class="lg:w-1/3">
-                {{-- Add debounce to prevent too frequent updates --}}
                 <flux:input wire:model.live.debounce.300ms="search" type="text" placeholder="Search Transaction" />
             </div>
             <flux:dropdown align="start" position="bottom">
                 <flux:button icon="funnel" variant="ghost">
                     Filter
-                    {{-- Show active filter indicator --}}
                     @if ($transactionableType || $startDate || $endDate || $programType)
                         <span
                             class="ml-1 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
@@ -98,7 +81,6 @@
                     @endif
                     <div class="px-2 py-1">
                         <div class="space-y-2">
-                            {{-- Add debounce to date inputs --}}
                             <flux:input type="date" wire:model.live.debounce.500ms="startDate"
                                 placeholder="Start Date" />
                             <flux:input type="date" wire:model.live.debounce.500ms="endDate"
@@ -114,7 +96,6 @@
         </div>
 
         <div class="flex flex-col">
-            {{-- Improved loading indicator --}}
             <div wire:loading.delay.longer wire:target="search, transactionableType, startDate, endDate, programType"
                 class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                 <div class="bg-white p-4 rounded-lg shadow-lg">
@@ -178,7 +159,6 @@
                                             {{ number_format($item->amount, 0, ',', '.') }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap flex justify-end">
-                                            {{-- Use unique keys for child components --}}
                                             <livewire:admin.transactions.show-transaction :transaction="$item"
                                                 :key="'show-' . $item->id" />
 
@@ -215,8 +195,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- Pagination --}}
             @if ($transactions->hasPages())
                 <div class="mt-4">
                     {{ $transactions->links() }}
