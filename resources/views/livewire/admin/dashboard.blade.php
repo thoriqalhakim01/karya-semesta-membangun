@@ -6,9 +6,7 @@
     <div class="grid grid-cols-4 gap-4">
         <div class="rounded-md border shadow">
             <div class="flex justify-between items-center p-4">
-                <div class="p-2 bg-neutral-100 rounded-md">
-                    <flux:icon.arrows-right-left class="size-6" />
-                </div>
+                <flux:avatar icon="arrows-right-left" />
                 <div>
                     <flux:select wire:model.live="period">
                         <flux:select.option value="week">This Week</flux:select.option>
@@ -28,9 +26,7 @@
                     <flux:heading size="sm">Programs</flux:heading>
                     <flux:text class="text-4xl font-semibold" variant="strong">{{ $totalPrograms }}</flux:text>
                 </div>
-                <div class="p-2 bg-neutral-100 rounded-md">
-                    <flux:icon.clipboard-document-list class="size-6" />
-                </div>
+                <flux:avatar icon="clipboard-document-list" />
             </div>
             <flux:separator />
             <div class="p-4 flex justify-center">
@@ -43,9 +39,7 @@
                     <flux:heading size="sm">Investments</flux:heading>
                     <flux:text class="text-4xl font-semibold" variant="strong">{{ $totalInvestments }}</flux:text>
                 </div>
-                <div class="p-2 bg-neutral-100 rounded-md">
-                    <flux:icon.chart-bar class="size-6" />
-                </div>
+                <flux:avatar icon="chart-bar" />
             </div>
             <flux:separator />
             <div class="p-4 flex justify-center">

@@ -21,6 +21,8 @@
                         <flux:navlist.item icon="arrows-right-left" :href="route('admin.transactions.index')" :current="request()->routeIs('admin.transactions.*')" wire:navigate>Transactions</flux:navlist.item>
                     @else
                         <flux:navlist.item icon="home" :href="route('user.index')" :current="request()->routeIs('user.index')" wire:navigate>Dashboard</flux:navlist.item>
+                        <flux:navlist.item icon="clipboard-document-list" :href="route('user.programs.index')" :current="request()->routeIs('user.programs.*')" wire:navigate>Programs</flux:navlist.item>
+                        <flux:navlist.item icon="chart-bar" :href="route('user.investments.index')" :current="request()->routeIs('user.investments.*')" wire:navigate>Investments</flux:navlist.item>
                     @endrole
                 </flux:navlist.group>
             </flux:navlist>

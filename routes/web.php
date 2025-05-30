@@ -1,6 +1,8 @@
 <?php
 
 use App\Livewire\User\Dashboard;
+use App\Livewire\User\Investments\IndexInvestment;
+use App\Livewire\User\Programs\IndexProgram;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -16,8 +18,21 @@ Route::middleware(['auth'])->group(function () {
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
     // User Routes
-    Route::middleware(['auth'])->group(function () {
-        Route::get('/dashboard', Dashboard::class)->name('user.index');
+    Route::middleware(['auth', 'role:user'])->group(function () {
+        Route::prefix('/dashboard')->group(function () {
+            Route::get('/', Dashboard::class)->name('user.index');
+
+            // Program routes
+            Route::prefix('programs')->group(function () {
+                Route::get('/', IndexProgram::class)->name('user.programs.index');
+            });
+
+            // Investment routes
+            Route::prefix('investments')->group(function () {
+                Route::get('/', IndexInvestment::class)->name('user.investments.index');
+            });
+        });
+
     });
 });
 
