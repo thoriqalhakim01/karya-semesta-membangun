@@ -1,19 +1,33 @@
 <?php
 namespace App\Models;
 
+use App\HasTransactions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Program extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasTransactions;
 
     protected $fillable = [
         'name',
         'description',
         'target',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($model) {
+            $model->transactions()->delete();
+        });
+
+        static::forceDeleting(function ($model) {
+            $model->transactions()->forceDelete();
+        });
+    }
 
     public function users()
     {
