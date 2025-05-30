@@ -4,9 +4,9 @@
         <flux:dropdown>
             <flux:button variant="primary" icon:trailing="chevron-down">Create New</flux:button>
             <flux:menu>
-                <flux:menu.item :href="route('admin.transaction.create-program')">Add Program Transaction
+                <flux:menu.item :href="route('admin.transactions.create-program')">Add Program Transaction
                 </flux:menu.item>
-                <flux:menu.item :href="route('admin.transaction.create-investment')">Add Investment
+                <flux:menu.item :href="route('admin.transactions.create-investment')">Add Investment
                     Transaction</flux:menu.item>
             </flux:menu>
         </flux:dropdown>
@@ -125,7 +125,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap flex justify-end">
                                             <livewire:admin.transactions.show-transaction :transaction="$item"
                                                 :key="$item->id" />
-                                            <flux:button variant="ghost" size="sm">
+                                            <flux:button variant="ghost" size="sm"
+                                                :href="$item->transactionable_type === 'App\Models\Program' ?
+                                                    route('admin.transactions.edit-program-transactions', $item->id) :
+                                                    route('admin.transactions.edit-investment-transactions', $item->id)"
+                                                wire:navigate>
                                                 <flux:icon.pencil-square class="text-green-500 size-5" />
                                             </flux:button>
                                             <flux:button variant="ghost" size="sm">
