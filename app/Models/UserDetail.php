@@ -20,7 +20,8 @@ class UserDetail extends Model
         'last_education',
         'major',
         'job',
-        'bank_accounts',
+        'btn_account_number',
+        'mandiri_account_number',
     ];
 
     protected $casts = [

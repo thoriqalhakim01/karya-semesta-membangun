@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('last_education')->nullable();
             $table->string('major')->nullable();
             $table->string('job')->nullable();
-            $table->json('bank_accounts')->nullable();
+            $table->string('btn_account_number')->nullable();
+            $table->string('mandiri_account_number')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
