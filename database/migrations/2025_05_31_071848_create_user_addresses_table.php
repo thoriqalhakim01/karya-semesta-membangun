@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('district')->nullable();
             $table->string('village')->nullable();
-            $table->string('address')->nullable();
+            $table->string('full_address')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

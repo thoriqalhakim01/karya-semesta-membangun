@@ -68,12 +68,16 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class);
     }
-    
+
     public function family()
     {
         return $this->hasOne(UserFamily::class);
     }
 
+    public function address()
+    {
+        return $this->hasOne(UserAddress::class);
+    }
 
     public function programs()
     {

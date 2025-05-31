@@ -17,7 +17,7 @@ class UserAddress extends Model
         'city',
         'district',
         'village',
-        'address',
+        'full_address',
     ];
 
     public function user()
