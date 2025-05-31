@@ -6,6 +6,7 @@ use App\Livewire\Admin\Investments\ShowInvestment;
 use App\Livewire\Admin\Members\CreateMember;
 use App\Livewire\Admin\Members\EditMember;
 use App\Livewire\Admin\Members\EditMemberInvestments;
+use App\Livewire\Admin\Members\EditMemberPassword;
 use App\Livewire\Admin\Members\EditMemberPrograms;
 use App\Livewire\Admin\Members\IndexMember;
 use App\Livewire\Admin\Members\ShowMember;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/{member}/edit', EditMember::class)->name('admin.members.edit');
             Route::get('/{member}/edit-programs', EditMemberPrograms::class)->name('admin.members.edit-programs');
             Route::get('/{member}/edit-investments', EditMemberInvestments::class)->name('admin.members.edit-investments');
+            Route::get('/{member}/edit-password', EditMemberPassword::class)->name('admin.members.edit-password');
         });
 
         Route::prefix('programs')->group(function () {
