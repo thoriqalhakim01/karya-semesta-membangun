@@ -104,12 +104,14 @@ new class extends Component {
                 </x-action-message>
             </div>
         </form>
-        <div class="space-y-6">
-            <livewire:settings.profile.user-detail />
-            <livewire:settings.profile.bank-account />
-            <livewire:settings.profile.user-address />
-            <livewire:settings.profile.user-family />
-        </div>
+        @if (Auth::user()->hasRole('user'))
+            <div class="space-y-6">
+                <livewire:settings.profile.user-detail />
+                <livewire:settings.profile.bank-account />
+                <livewire:settings.profile.user-address />
+                <livewire:settings.profile.user-family />
+            </div>
+        @endif
         <livewire:settings.delete-user-form />
     </x-settings.layout>
 </section>
