@@ -5,6 +5,7 @@ use App\Models\Investment;
 use App\Models\Program;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\UserAddress;
 use App\Models\UserDetail;
 use App\Models\UserFamily;
 use App\Models\UserInvestment;
@@ -36,6 +37,10 @@ class DataDummySeeder extends Seeder
                     'user_id' => $user->id,
                 ]);
 
+                UserAddress::create([
+                    'user_id' => $user->id,
+                ]);
+                
                 $user->assignRole('user');
 
                 $randomPrograms = Program::inRandomOrder()->take(fake()->numberBetween(1, 3))->get();
