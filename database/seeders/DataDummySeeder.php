@@ -6,6 +6,7 @@ use App\Models\Program;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Models\UserFamily;
 use App\Models\UserInvestment;
 use App\Models\UserProgram;
 use Illuminate\Database\Seeder;
@@ -28,6 +29,10 @@ class DataDummySeeder extends Seeder
 
             foreach ($users as $user) {
                 UserDetail::factory()->create([
+                    'user_id' => $user->id,
+                ]);
+
+                UserFamily::create([
                     'user_id' => $user->id,
                 ]);
 

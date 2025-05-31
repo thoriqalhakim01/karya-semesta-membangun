@@ -3,7 +3,7 @@
         <flux:heading size="xl">Dashboard</flux:heading>
         <flux:text class="text-sm">Track your community's activities and progress</flux:text>
     </div>
-    <div class="grid grid-cols-4 gap-4">
+    <div class="grid grid-cols-3 gap-4">
         <div class="rounded-md border shadow">
             <div class="flex justify-between items-center p-4">
                 <flux:avatar icon="arrows-right-left" />
