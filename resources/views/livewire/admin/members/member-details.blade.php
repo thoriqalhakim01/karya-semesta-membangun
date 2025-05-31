@@ -89,22 +89,10 @@
                 class="{{ $showAddress ? 'rotate-180' : '' }} size-4 transition duration-300 ease-in-out" />
         </button>
         <div
-            class="{{ $showAddress ? 'block' : 'hidden' }} grid grid-cols-2 gap-4 transition duration-300 ease-in-out">
+            class="{{ $showAddress ? 'block' : 'hidden' }} space-y-4 transition duration-300 ease-in-out">
             <div>
-                <flux:heading>Province</flux:heading>
-                <flux:text>{{ $member->address->province ?? '-' }}</flux:text>
-            </div>
-            <div>
-                <flux:heading>City</flux:heading>
-                <flux:text>{{ $member->address->city ?? '-' }}</flux:text>
-            </div>
-            <div>
-                <flux:heading>District</flux:heading>
-                <flux:text class="capitalize">{{ $member->address->district ?? '-' }}</flux:text>
-            </div>
-            <div>
-                <flux:heading>Village</flux:heading>
-                <flux:text>{{ $member->address->village ?? '-' }}</flux:text>
+                <flux:heading>Type</flux:heading>
+                <flux:text class="capitalize">{{ $member->address->address_type ?? '-' }}</flux:text>
             </div>
             <div>
                 <flux:heading>Full Address</flux:heading>
