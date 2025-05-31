@@ -16,6 +16,8 @@ class EditMember extends Component
         $this->member = $member;
 
         $this->form->setMember($this->member);
+        $this->form->setMemberAddress($this->member->address()->first());
+        $this->form->setMemberFamily($this->member->family()->first());
     }
 
     public function save()
