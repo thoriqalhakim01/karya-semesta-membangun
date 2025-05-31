@@ -23,6 +23,10 @@ class UserDetail extends Model
         'bank_accounts',
     ];
 
+    protected $casts = [
+        'bank_accounts' => 'array',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
