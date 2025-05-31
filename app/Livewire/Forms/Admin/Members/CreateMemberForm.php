@@ -53,34 +53,34 @@ class CreateMemberForm extends Form
         switch ($step) {
             case 1:
                 return [
-                    'name.required'        => 'Nama lengkap wajib diisi.',
-                    'name.min'             => 'Nama minimal 2 karakter.',
-                    'name.max'             => 'Nama maksimal 255 karakter.',
-                    'email.required'       => 'Email wajib diisi.',
-                    'email.email'          => 'Format email tidak valid.',
-                    'email.unique'         => 'Email sudah terdaftar.',
-                    'phone.required'       => 'Nomor telepon wajib diisi.',
-                    'phone.numeric'        => 'Nomor telepon harus berupa angka.',
-                    'phone.digits_between' => 'Nomor telepon harus 10-15 digit.',
-                    'gender.required'      => 'Jenis kelamin wajib dipilih.',
-                    'gender.in'            => 'Jenis kelamin harus male atau female.',
-                    'dateOfBirth.required' => 'Tanggal lahir wajib diisi.',
-                    'dateOfBirth.date'     => 'Format tanggal lahir tidak valid.',
-                    'dateOfBirth.before'   => 'Tanggal lahir harus sebelum hari ini.',
+                    'name.required'        => 'Full name is required.',
+                    'name.min'             => 'Full name must be at least 2 characters.',
+                    'name.max'             => 'Full name must not be more than 255 characters.',
+                    'email.required'       => 'Email is required.',
+                    'email.email'          => 'Invalid email format.',
+                    'email.unique'         => 'Email is already registered.',
+                    'phone.required'       => 'Phone number is required.',
+                    'phone.numeric'        => 'Phone number must be a number.',
+                    'phone.digits_between' => 'Phone number must be between 10-15 digits.',
+                    'gender.required'      => 'Gender is required.',
+                    'gender.in'            => 'Gender must be male or female.',
+                    'dateOfBirth.required' => 'Date of birth is required.',
+                    'dateOfBirth.date'     => 'Invalid date of birth format.',
+                    'dateOfBirth.before'   => 'Date of birth must be before today.',
                 ];
 
             case 2:
                 return [
-                    'programs.*.exists'    => 'Program yang dipilih tidak valid.',
-                    'investments.*.exists' => 'Investasi yang dipilih tidak valid.',
+                    'programs.*.exists'    => 'Program is not valid.',
+                    'investments.*.exists' => 'Investment is not valid.',
                 ];
 
             case 3:
                 return [
-                    'password.required'        => 'Password wajib diisi.',
-                    'password.min'             => 'Password minimal 8 karakter.',
-                    'confirmPassword.required' => 'Konfirmasi password wajib diisi.',
-                    'confirmPassword.same'     => 'Konfirmasi password tidak cocok.',
+                    'password.required'        => 'Password is required.',
+                    'password.min'             => 'Password must be at least 8 characters.',
+                    'confirmPassword.required' => 'Confirm password is required.',
+                    'confirmPassword.same'     => 'Confirm password does not match.',
                 ];
 
             default:
@@ -149,11 +149,15 @@ class CreateMemberForm extends Form
                 'gender'     => $this->gender,
             ]);
 
-            if ($this->programs) {
+            $user->family()->create();
+
+            $user->address()->create();
+
+            if (! empty($this->programs) && ! in_array('', $this->programs, true)) {
                 $user->programs()->attach($this->programs, ['created_at' => now(), 'updated_at' => now()]);
             }
 
-            if ($this->investments) {
+            if (! empty($this->investments) && ! in_array('', $this->investments, true)) {
                 $user->investments()->attach($this->investments, ['created_at' => now(), 'updated_at' => now()]);
             }
 

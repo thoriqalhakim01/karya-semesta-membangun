@@ -97,18 +97,11 @@ class CreateMember extends Component
 
     public function save()
     {
-        try {
-            $this->form->store();
+        $this->form->store();
 
-            session()->flash('message', 'Member berhasil dibuat!');
-            return redirect()->route('admin.members.index');
-
-        } catch (\Exception $e) {
-            session()->flash('error', 'Terjadi kesalahan saat menyimpan data.');
-        }
+        return redirect()->route('admin.members.index');
     }
 
-    // Method untuk validasi real-time (opsional)
     public function updated($propertyName)
     {
         if (str_starts_with($propertyName, 'form.') && $this->currentStep == 1) {

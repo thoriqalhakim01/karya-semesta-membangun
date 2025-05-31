@@ -20,7 +20,4 @@
         @include('livewire.admin.members.member-details')
         @include('livewire.admin.members.program-investment')
     </div>
-    <div class="col-span-full">
-        @include('livewire.admin.members.transactions')
-    </div>
 </div>

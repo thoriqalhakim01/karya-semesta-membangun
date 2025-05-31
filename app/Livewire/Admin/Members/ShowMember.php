@@ -12,6 +12,11 @@ class ShowMember extends Component
 
     public $member;
 
+    public $showDetail      = false;
+    public $showBankAccount = false;
+    public $showAddress     = false;
+    public $showFamily      = false;
+
     public function mount($member)
     {
         $this->member = User::with(['detail', 'investments', 'programs.transactions'])->findOrFail($member);
@@ -24,19 +29,47 @@ class ShowMember extends Component
             ->sum('amount');
     }
 
+    public function setShowDetail()
+    {
+        if ($this->showDetail) {
+            $this->showDetail = false;
+        } else {
+            $this->showDetail = true;
+        }
+    }
+
+    public function setShowBankAccount()
+    {
+        if ($this->showBankAccount) {
+            $this->showBankAccount = false;
+        } else {
+            $this->showBankAccount = true;
+        }
+    }
+
+    public function setShowAddress()
+    {
+        if ($this->showAddress) {
+            $this->showAddress = false;
+        } else {
+            $this->showAddress = true;
+        }
+    }
+
+    public function setShowFamily()
+    {
+        if ($this->showFamily) {
+            $this->showFamily = false;
+        } else {
+            $this->showFamily = true;
+        }
+    }
+
     public function getCollectedAmountInvestment($investment)
     {
         return $investment->transactions()
             ->where('user_id', $this->member->id)
             ->sum('amount');
-    }
-
-    public function getTransactionsProperty()
-    {
-        return $this->member->memberTransactions()
-            ->with(['transactionable'])
-            ->orderBy('transaction_date', 'desc')
-            ->paginate(10);
     }
 
     public function delete(User $member)
@@ -48,8 +81,6 @@ class ShowMember extends Component
 
     public function render()
     {
-        return view('livewire.admin.members.show-member', [
-            'transactions' => $this->transactions,
-        ]);
+        return view('livewire.admin.members.show-member');
     }
 }
