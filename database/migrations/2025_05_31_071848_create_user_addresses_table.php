@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_addresses', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('address_type', ['home', 'ktp', 'domicile'])->nullable();
             $table->string('full_address')->nullable();
             $table->timestamps();

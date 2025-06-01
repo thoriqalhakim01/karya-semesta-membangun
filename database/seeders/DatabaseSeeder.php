@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             DB::beginTransaction();
 
             $this->call(RolePermissionSeeder::class);
-            $this->call(DataDummySeeder::class);
+            // $this->call(DataDummySeeder::class);
 
             DB::commit();
         } catch (\Throwable $th) {

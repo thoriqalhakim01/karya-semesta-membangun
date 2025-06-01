@@ -1,11 +1,11 @@
 <?php
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -17,19 +17,19 @@ class RolePermissionSeeder extends Seeder
         try {
             DB::beginTransaction();
 
-            Role::create(['name' => 'admin']);
-            Role::create(['name' => 'user']);
+            Role::create(['name' => 'admin', 'guard_name' => 'web']);
+            Role::create(['name' => 'user', 'guard_name' => 'web']);
 
             $admin = User::create([
                 'name'              => 'Admin',
-                'email'             => 'admin@test.com',
+                'email'             => 'admin@karsemam.id',
                 'password'          => Hash::make('password'),
                 'email_verified_at' => now(),
                 'phone'             => '081234567890',
             ]);
 
             $admin->detail()->create([
-                'birth_date' => '1990-01-01',
+                'birth_date' => '2000-01-01',
                 'gender'     => 'male',
             ]);
 
