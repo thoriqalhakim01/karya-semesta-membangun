@@ -19,6 +19,7 @@
                         <flux:navlist.item icon="clipboard-document-list" :href="route('admin.programs.index')" :current="request()->routeIs('admin.programs.*')" wire:navigate>Programs</flux:navlist.item>
                         <flux:navlist.item icon="chart-bar" :href="route('admin.investments.index')" :current="request()->routeIs('admin.investments.*')" wire:navigate>Investments</flux:navlist.item>
                         <flux:navlist.item icon="arrows-right-left" :href="route('admin.transactions.index')" :current="request()->routeIs('admin.transactions.*')" wire:navigate>Transactions</flux:navlist.item>
+                        <flux:navlist.item icon="newspaper" :href="route('admin.blogs.index')" :current="request()->routeIs('admin.blogs.*')" wire:navigate>Blogs</flux:navlist.item>
                     @else
                         <flux:navlist.item icon="home" :href="route('user.index')" :current="request()->routeIs('user.index')" wire:navigate>Dashboard</flux:navlist.item>
                         <flux:navlist.item icon="clipboard-document-list" :href="route('user.programs.index')" :current="request()->routeIs('user.programs.*')" wire:navigate>Programs</flux:navlist.item>
