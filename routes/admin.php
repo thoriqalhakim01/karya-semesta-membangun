@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Admin\Blogs\CreateBlog;
+use App\Livewire\Admin\Blogs\IndexBlog;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Investments\IndexInvestment;
 use App\Livewire\Admin\Investments\ShowInvestment;
@@ -50,6 +52,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('/{id}/edit-investment-transactions', EditInvestmentTransaction::class)->name('admin.transactions.edit-investment-transactions');
             Route::get('/{id}/edit-program-transactions', EditProgramTransaction::class)->name('admin.transactions.edit-program-transactions');
         });
-    });
 
+        Route::prefix('blogs')->group(function () {
+            Route::get('/', IndexBlog::class)->name('admin.blogs.index');
+            Route::get('/create', CreateBlog::class)->name('admin.blogs.create');
+        });
+    });
 });
