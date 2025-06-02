@@ -30,7 +30,7 @@
             </div>
             <flux:separator />
             <div class="p-4 flex justify-center">
-                <flux:link :href="route('admin.members.index')" class="text-sm" wire:navigate>View details</flux:link>
+                <flux:link :href="route('admin.programs.index')" class="text-sm" wire:navigate>View details</flux:link>
             </div>
         </div>
         <div class="rounded-md border shadow">
@@ -43,7 +43,8 @@
             </div>
             <flux:separator />
             <div class="p-4 flex justify-center">
-                <flux:link :href="route('admin.members.index')" class="text-sm" wire:navigate>View details</flux:link>
+                <flux:link :href="route('admin.investments.index')" class="text-sm" wire:navigate>View details
+                </flux:link>
             </div>
         </div>
         <div class="rounded-md border shadow">
